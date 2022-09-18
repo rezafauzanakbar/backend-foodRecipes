@@ -75,7 +75,7 @@ const recipesModel = {
   // router filter
   selectSearch: (title) => {
     return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM recipes WHERE title='${title}'`, (err, res) => {
+      db.query(`SELECT * FROM recipes WHERE title ILIKE '${title}'`, (err, res) => {
         if (err) {
           reject(err)
         }
