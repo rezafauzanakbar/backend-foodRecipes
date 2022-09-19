@@ -10,3 +10,7 @@ ALTER TABLE recipes ADD description VARCHAR
 SELECT * FROM recipes
 INSERT INTO recipes (id, photo, title, ingredients, video) VALUES (1,'birthday-cake.jpg','Birthday Cake','Terigu, Telor, Mentega, Gula','https://make-birthday-cake.com')
 SELECT step FROM recipes
+
+CREATE TABLE comments (id INTEGER PRIMARY KEY,id_user INTEGER,id_recipes INTEGER, isi_comment VARCHAR)
+INSERT INTO comments (id, id_user, id_recipes, isi_comment) VALUES (1, 1, 1, 'Enak banget oi')
+SELECT * FROM comments
