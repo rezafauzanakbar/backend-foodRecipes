@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "4ceaf0b7-d4ff-4e83-8eb4-dd251ecfe420",
+		"name": "food_recipes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16216180"
+	},
+	"item": [
+		{
+			"name": "GET USER",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DETAIL USER",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT USER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 6,\r\n    \"name\": \"Petra\",\r\n    \"email\": \"petra@gmail.com\",\r\n    \"phone\": \"081128319123\",\r\n    \"password\": \"pijar camp\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE USER",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE USER",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phone\": \"0856240541234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SEARCH USER",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/user/search/Petra",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"user",
+						"search",
+						"Petra"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SORTING USER",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/name",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"name"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET RECIPES",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/recipes",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DETAIL RECIPES",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/recipes/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"recipes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "INSERT RECIPES",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"4\",\r\n    \"photo\": \"roti.jpg\",\r\n    \"title\": \"Roti Buaya\",\r\n    \"ingredients\": \"Terigu, mentega, pengembang\",\r\n    \"video\": \"https://roti-nakal.com\",\r\n    \"step\": \"Sipkan bahan. Campur Semua Bahan. Tunggu Mengembang. Adonan Dipangggang. Roti Siap dihidnagkan\",\r\n    \"description\": \"Roti Buaya Khas Surabaya\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/recipes",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE RECIPES",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/recipes/4",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"recipes",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE RECIPES",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Burger Spicy Pisan\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/recipes/3",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"recipes",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SORTING RECIPES",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/title",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"title"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SEARCH RECIPES",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/recipes/search/Pizza",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"recipes",
+						"search",
+						"Pizza"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET COMMENT",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/comment",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"comment"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
