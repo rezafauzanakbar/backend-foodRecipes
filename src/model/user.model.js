@@ -1,95 +1,122 @@
-const db = require('../config/db')
+const db = require("../config/db");
 const userModel = {
   selectAll: () => {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM users', (err, res) => {
+      db.query(`SELECT * FROM users ORDER BY id ASC`, (err, res) => {
         if (err) {
-          reject(err)
+          reject(err);
         }
-        resolve(res)
-      })
-    })
+        resolve(res);
+      });
+    });
   },
   // router details
   selectDetail: (id) => {
     return new Promise((resolve, reject) => {
       db.query(`SELECT * FROM users WHERE id=${id}`, (err, res) => {
         if (err) {
-          reject(err)
+          reject(err);
         }
-        resolve(res)
-      })
-    })
+        resolve(res);
+      });
+    });
   },
   // router insert
-  store: (id, name, email, phone, password) => {
+  store: (name, email, phone, password, level) => {
     return new Promise((resolve, reject) => {
       db.query(
         `
-        INSERT INTO users (id, name, email, phone, password)
+        INSERT INTO users (name, email, phone, password, level)
         VALUES
-        (${id}, '${name}', '${email}', '${phone}', '${password}')`,
+        ('${name}', '${email}', '${phone}', '${password}', ${level})`,
         (err, res) => {
           if (err) {
-            reject(err)
+            reject(err);
           }
-          resolve(res)
+          resolve(res);
         }
-      )
-    })
+      );
+    });
   },
   // router hapus
   removeById: (id) => {
     return new Promise((resolve, reject) => {
       db.query(`DELETE FROM users WHERE id=${id}`, (err, res) => {
         if (err) {
-          reject(err)
+          reject(err);
         }
-        resolve(res)
-      })
-    })
+        resolve(res);
+      });
+    });
   },
   // router update
-  update: (id, name, email, phone, password) => {
+  update: (id, name, email, phone, gambar) => {
     return new Promise((resolve, reject) => {
       db.query(
         `UPDATE users SET
         name = COALESCE($1, name),
         email = COALESCE($2, email),
         phone = COALESCE($3, phone),
-        password = COALESCE($4, password)
+        gambar = COALESCE($4, gambar)
         WHERE id = $5`,
-        [name, email, phone, password, id],
+        [name, email, phone, gambar, id],
         (err, result) => {
           if (err) {
-            reject(err)
+            reject(err);
           } else {
-            resolve(result)
+            resolve(result);
           }
         }
-      )
-    })
+      );
+    });
   },
   // router filter
   selectSearch: (name) => {
     return new Promise((resolve, reject) => {
       db.query(`SELECT * FROM users WHERE name='${name}'`, (err, res) => {
         if (err) {
-          reject(err)
+          reject(err);
         }
-        resolve(res)
-      })
-    })
+        resolve(res);
+      });
+    });
   },
   selectSorting: () => {
     return new Promise((resolve, reject) => {
-      db.query('SELECT name FROM users ORDER BY name ASC', (err, res) => {
+      db.query("SELECT name FROM users ORDER BY name ASC", (err, res) => {
         if (err) {
-          reject(err)
+          reject(err);
         }
-        resolve(res)
-      })
-    })
-  }
-}
-module.exports = userModel
+        resolve(res);
+      });
+    });
+  },
+
+  //model register
+  register: ({ name, email, phone, password, level, gambar }) => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        `INSERT INTO users (name, email, phone, password, level, gambar) VALUES ('${name}', '${email}', '${phone}', '${password}', ${level}, '${gambar}')`,
+        (err, res) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(res);
+        }
+      );
+    });
+  },
+
+  //model login
+  checkUsername: (email) => {
+    return new Promise((resolve, reject) => {
+      db.query(`SELECT * FROM users WHERE email = '${email}'`, (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res);
+      });
+    });
+  },
+};
+module.exports = userModel;

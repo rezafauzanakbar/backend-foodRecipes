@@ -1,21 +1,28 @@
 // koneksi ke postgreSQL
 
 // declare library
-const pg = require('pg')
+const pg = require("pg");
+const {
+  DB_HOSTNAME,
+  DB_USERNAME,
+  DB_PASSWORD,
+  DB_NAME,
+  PORT,
+} = require("../helper/env");
 const db = new pg.Pool({
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_DATABASE,
-  port: process.env.DATABASE_PORT
-})
+  host: DB_HOSTNAME,
+  user: DB_USERNAME,
+  password: DB_PASSWORD,
+  database: DB_NAME,
+  port: PORT,
+});
 
 db.connect((err) => {
   if (err) {
-    console.log('error connecting to database')
+    console.log("error connecting to database");
   } else {
-    console.log('database connected')
+    console.log("database connected");
   }
-})
+});
 
-module.exports = db
+module.exports = db;
