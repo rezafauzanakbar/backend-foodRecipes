@@ -4,7 +4,14 @@ const userController = {
   // method
   list: async (req, res) => {
     // method untuk input data
+<<<<<<< HEAD
     const getUser = await userModel.selectAll();
+=======
+    const limit = Number(req.query.limit) || 4
+    const page = Number(req.query.page) || 1
+    const offset = (page - 1) * limit
+    const getUser = await userModel.selectAll(limit, offset)
+>>>>>>> e2d7d3d47402c9f06cdbf3d2cd336a8388d8f31b
     try {
       res.json(getUser);
     } catch (err) {

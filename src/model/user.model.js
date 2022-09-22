@@ -1,8 +1,12 @@
 const db = require("../config/db");
 const userModel = {
-  selectAll: () => {
+  selectAll: (limit, offset) => {
     return new Promise((resolve, reject) => {
+<<<<<<< HEAD
       db.query(`SELECT * FROM users ORDER BY id ASC`, (err, res) => {
+=======
+      db.query(`SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`, (err, res) => {
+>>>>>>> e2d7d3d47402c9f06cdbf3d2cd336a8388d8f31b
         if (err) {
           reject(err);
         }
@@ -73,7 +77,7 @@ const userModel = {
   // router filter
   selectSearch: (name) => {
     return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM users WHERE name='${name}'`, (err, res) => {
+      db.query(`SELECT * FROM users WHERE name ILIKE '${name}'`, (err, res) => {
         if (err) {
           reject(err);
         }

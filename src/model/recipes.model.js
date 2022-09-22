@@ -75,6 +75,7 @@ const recipesModel = {
   // router filter
   selectSearch: (title) => {
     return new Promise((resolve, reject) => {
+<<<<<<< HEAD
       db.query(
         `SELECT * FROM recipes WHERE title ILIKE '${title}'`,
         (err, res) => {
@@ -82,6 +83,11 @@ const recipesModel = {
             reject(err);
           }
           resolve(res);
+=======
+      db.query(`SELECT * FROM recipes WHERE title ILIKE '${title}'`, (err, res) => {
+        if (err) {
+          reject(err)
+>>>>>>> e2d7d3d47402c9f06cdbf3d2cd336a8388d8f31b
         }
       );
     });
