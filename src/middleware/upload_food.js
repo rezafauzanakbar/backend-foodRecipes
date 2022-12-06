@@ -8,7 +8,7 @@ const path = require("path");
 const multerUpload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "./public/gambar user");
+      cb(null, "./public/gambar food");
     },
     filename: (req, file, cb) => {
       const ext = path.extname(file.originalname);
@@ -18,7 +18,7 @@ const multerUpload = multer({
   }),
   fileFilter: (req, file, cb) => {
     const ext = path.extname(file.originalname);
-    if (ext === ".jpg" || ext === ".png") {
+    if (ext === ".jpg" || ext === ".png" || ext === ".PNG") {
       cb(null, true);
     } else {
       const error = {
@@ -28,12 +28,12 @@ const multerUpload = multer({
     }
   },
   //Size file max 2MB compare to characters
-  limits: { fileSize: 2097152 },
+  // limits: { fileSize: 20971520000 },
 });
 
 //untuk middleware
-const upload = (req, res, next) => {
-  const multerSingle = multerUpload.single("gambar");
+const upload_food = (req, res, next) => {
+  const multerSingle = multerUpload.single("picture");
   multerSingle(req, res, (err) => {
     if (err) {
       res.json({
@@ -46,4 +46,4 @@ const upload = (req, res, next) => {
   });
 };
 
-module.exports = upload;
+module.exports = upload_food;

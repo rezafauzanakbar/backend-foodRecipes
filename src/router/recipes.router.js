@@ -1,25 +1,35 @@
 // declare library
-const express = require('express')
+const express = require("express");
 const {
   list,
+  allList,
+  listRecipes,
+  listByUser,
   detail,
-  insert,
   destroy,
+  insert,
   update,
   search,
-  sorting
-} = require('../controller/recipes.controller')
+  detailTitle,
+  sorting,
+} = require("../controller/recipes.controller");
 
 // buat variabel dengan memanggil library express router
-const router = express.Router()
+const router = express.Router();
+const uploadFood = require("../middleware/upload_food");
+const deleteFood = require("../middleware/deleteFood");
 
 router
-  .get('/recipes', list)
-  .get('/recipes/:id', detail)
-  .post('/recipes', insert)
-  .delete('/recipes/:id', destroy)
-  .put('/recipes/:id', update)
-  .get('/recipes/search/:title', search)
-  .get('/title', sorting)
+  .get("/recipes", list)
+  .get("/recipes/data", allList)
+  .get("/recipes/listrecipes", listRecipes)
+  .get("/recipes/listrecipesuser/:id", listByUser)
+  .get("/recipes/:id", detail)
+  .post("/recipes", uploadFood, insert)
+  .delete("/recipes/:id", deleteFood, destroy)
+  .put("/recipes/:id", deleteFood, uploadFood, update)
+  .get("/recipes/search/:title", search)
+  .get("/recipe/:title", detailTitle)
+  .get("/title", sorting);
 
-module.exports = router // harus di ekspor agar bisa dipanggil di index
+module.exports = router; // harus di ekspor agar bisa dipanggil di index

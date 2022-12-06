@@ -11,7 +11,7 @@ module.exports = {
     try {
       //tangkap data dari body
       const { name, email, phone, password, level } = req.body;
-      const gambar = req.file.filename;
+      // const gambar = req.file.filename;
       bcyrpt.hash(password, 10, (err, hash) => {
         if (err) {
           failed(res, err.message, "failed", "fail hash password");
@@ -23,7 +23,7 @@ module.exports = {
           phone,
           password: hash,
           level,
-          gambar,
+          gambar: req.file ? req.file.filename : "default.png",
         };
         userModel
           .register(data)
@@ -56,10 +56,15 @@ module.exports = {
                   level: user.level,
                 });
                 // console.log(token);
-                succesWithToken(res, token, "success", "login success");
+                succesWithToken(
+                  res,
+                  { token, data: user },
+                  "success",
+                  "login success"
+                );
               } else {
                 //ketika password salah
-                failed(res, null, "failed", "password salah");
+                failed(res, null, "failed", "email atau password salah");
               }
             });
         } else {

@@ -1,12 +1,8 @@
 const db = require("../config/db");
 const userModel = {
-  selectAll: (limit, offset) => {
+  selectAll: () => {
     return new Promise((resolve, reject) => {
-<<<<<<< HEAD
-      db.query(`SELECT * FROM users ORDER BY id ASC`, (err, res) => {
-=======
-      db.query(`SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`, (err, res) => {
->>>>>>> e2d7d3d47402c9f06cdbf3d2cd336a8388d8f31b
+      db.query(`SELECT * FROM users`, (err, res) => {
         if (err) {
           reject(err);
         }
@@ -15,9 +11,9 @@ const userModel = {
     });
   },
   // router details
-  selectDetail: (id) => {
+  selectDetail: (id_user) => {
     return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM users WHERE id=${id}`, (err, res) => {
+      db.query(`SELECT * FROM users WHERE id_user=${id_user}`, (err, res) => {
         if (err) {
           reject(err);
         }
@@ -25,27 +21,10 @@ const userModel = {
       });
     });
   },
-  // router insert
-  store: (name, email, phone, password, level) => {
-    return new Promise((resolve, reject) => {
-      db.query(
-        `
-        INSERT INTO users (name, email, phone, password, level)
-        VALUES
-        ('${name}', '${email}', '${phone}', '${password}', ${level})`,
-        (err, res) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(res);
-        }
-      );
-    });
-  },
   // router hapus
-  removeById: (id) => {
+  removeById: (id_user) => {
     return new Promise((resolve, reject) => {
-      db.query(`DELETE FROM users WHERE id=${id}`, (err, res) => {
+      db.query(`DELETE FROM users WHERE id_user=${id_user}`, (err, res) => {
         if (err) {
           reject(err);
         }
@@ -54,16 +33,18 @@ const userModel = {
     });
   },
   // router update
-  update: (id, name, email, phone, gambar) => {
+  update: (id_user, name, email, phone, password, level, update_at) => {
     return new Promise((resolve, reject) => {
       db.query(
         `UPDATE users SET
         name = COALESCE($1, name),
         email = COALESCE($2, email),
         phone = COALESCE($3, phone),
-        gambar = COALESCE($4, gambar)
-        WHERE id = $5`,
-        [name, email, phone, gambar, id],
+        password = COALESCE($4, password),
+        level = COALESCE($5, level),
+        update_at = COALESCE($6, now())
+        WHERE id_user = $7`,
+        [name, email, phone, password, level, update_at, id_user],
         (err, result) => {
           if (err) {
             reject(err);
@@ -72,6 +53,19 @@ const userModel = {
           }
         }
       );
+    });
+  },
+  updatePhoto: (id_user, gambar) => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        `UPDATE users SET gambar = '${gambar}' WHERE id_user = ${id_user}`
+      )
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   },
   // router filter
@@ -100,7 +94,7 @@ const userModel = {
   register: ({ name, email, phone, password, level, gambar }) => {
     return new Promise((resolve, reject) => {
       db.query(
-        `INSERT INTO users (name, email, phone, password, level, gambar) VALUES ('${name}', '${email}', '${phone}', '${password}', ${level}, '${gambar}')`,
+        `INSERT INTO users (name, email, phone, password, level, gambar, created_at) VALUES ('${name}', '${email}', '${phone}', '${password}', ${level}, '${gambar}', now())`,
         (err, res) => {
           if (err) {
             reject(err);
