@@ -1,5 +1,7 @@
 const recipesModel = require("../model/recipes.model");
 const { success, failed } = require("../helper/response");
+const cloudinary = require("../helper/cloudinary");
+
 const recipesController = {
   // method
   list: async (req, res) => {
@@ -75,9 +77,14 @@ const recipesController = {
       });
   },
   insert: async (req, res) => {
+    //jika menggunakan cloudinary
+    const picture = await cloudinary.uploader.upload(req.file.path);
+
     // method untuk input
     const { id_users, title, ingredients, video } = req.body;
-    const picture = req.file.filename;
+
+    //jika upload image menggunakan local
+    // const picture = req.file.filename;
     const getRecipes = await recipesModel.store(
       id_users,
       picture,
