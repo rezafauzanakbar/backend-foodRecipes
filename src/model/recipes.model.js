@@ -1,28 +1,28 @@
 const db = require("../config/db");
 const recipesModel = {
-  selectAll: (sort, asc, limit, offset) => {
-    return new Promise((resolve, reject) => {
-      db.query(
-        `SELECT * FROM recipes ORDER BY ${sort} ${asc} LIMIT ${limit} OFFSET ${offset}`,
-        (err, res) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(res);
-        }
-      );
-    });
-  },
-  selectAllData: () => {
-    return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM recipes`, (err, res) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(res);
-      });
-    });
-  },
+  // selectAll: (sort, asc, limit, offset) => {
+  //   return new Promise((resolve, reject) => {
+  //     db.query(
+  //       `SELECT * FROM recipes ORDER BY ${sort} ${asc} LIMIT ${limit} OFFSET ${offset}`,
+  //       (err, res) => {
+  //         if (err) {
+  //           reject(err);
+  //         }
+  //         resolve(res);
+  //       }
+  //     );
+  //   });
+  // },
+  // selectAllData: () => {
+  //   return new Promise((resolve, reject) => {
+  //     db.query(`SELECT * FROM recipes`, (err, res) => {
+  //       if (err) {
+  //         reject(err);
+  //       }
+  //       resolve(res);
+  //     });
+  //   });
+  // },
   getAllRecipes: (sort, asc, limit, offset) => {
     return new Promise((resolve, reject) => {
       db.query(
@@ -82,13 +82,13 @@ const recipesModel = {
     });
   },
   // router insert
-  store: (id_users, picture, title, ingredients, video) => {
+  store: (body) => {
     return new Promise((resolve, reject) => {
       db.query(
         `
         INSERT INTO recipes (id_users, picture, title, ingredients, video, created_at)
         VALUES
-        (${id_users},'${picture}', '${title}', '${ingredients}', '${video}', now())`,
+        (${body.id_users},'${body.picture}', '${body.title}', '${body.ingredients}', '${body.video}', now())`,
         (err, res) => {
           if (err) {
             reject(err);

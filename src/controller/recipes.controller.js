@@ -4,29 +4,29 @@ const cloudinary = require("../helper/cloudinary");
 
 const recipesController = {
   // method
-  list: async (req, res) => {
-    //method untuk menampilkan data
-    const sort = req.query.sort;
-    const asc = req.query.asc;
-    const limit = Number(req.query.limit) || 3;
-    const page = Number(req.query.page) || 1;
-    const offset = (page - 1) * limit;
-    const getRecipes = await recipesModel.selectAll(sort, asc, limit, offset);
-    try {
-      res.json(getRecipes);
-    } catch (err) {
-      res.json(err);
-    }
-  },
-  allList: async (req, res) => {
-    //method untuk menampilkan data
-    const getRecipes = await recipesModel.selectAllData();
-    try {
-      res.json(getRecipes);
-    } catch (err) {
-      res.json(err);
-    }
-  },
+  // list: async (req, res) => {
+  //   //method untuk menampilkan data
+  //   const sort = req.query.sort;
+  //   const asc = req.query.asc;
+  //   const limit = Number(req.query.limit) || 3;
+  //   const page = Number(req.query.page) || 1;
+  //   const offset = (page - 1) * limit;
+  //   const getRecipes = await recipesModel.selectAll(sort, asc, limit, offset);
+  //   try {
+  //     res.json(getRecipes);
+  //   } catch (err) {
+  //     res.json(err);
+  //   }
+  // },
+  // allList: async (req, res) => {
+  //   //method untuk menampilkan data
+  //   const getRecipes = await recipesModel.selectAllData();
+  //   try {
+  //     res.json(getRecipes);
+  //   } catch (err) {
+  //     res.json(err);
+  //   }
+  // },
   listRecipes: (req, res) => {
     const sort = req.query.sort;
     const asc = req.query.asc;
@@ -79,19 +79,18 @@ const recipesController = {
   insert: async (req, res) => {
     //jika menggunakan cloudinary
     const picture = await cloudinary.uploader.upload(req.file.path);
-
     // method untuk input
     const { id_users, title, ingredients, video } = req.body;
-
     //jika upload image menggunakan local
     // const picture = req.file.filename;
-    const getRecipes = await recipesModel.store(
+    const body = await {
       id_users,
-      picture,
+      picture: picture.original_filename,
       title,
       ingredients,
-      video
-    );
+      video,
+    };
+    const getRecipes = await recipesModel.store(body);
     try {
       res.json(getRecipes);
     } catch (err) {

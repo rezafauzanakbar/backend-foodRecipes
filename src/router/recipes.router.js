@@ -1,8 +1,6 @@
 // declare library
 const express = require("express");
 const {
-  list,
-  allList,
   listRecipes,
   listByUser,
   detail,
@@ -20,8 +18,6 @@ const uploadFood = require("../middleware/upload_food");
 const deleteFood = require("../middleware/deleteFood");
 
 router
-  .get("/recipes", list)
-  .get("/recipes/data", allList)
   .get("/recipes/listrecipes", listRecipes)
   .get("/recipes/listrecipesuser/:id", listByUser)
   .get("/recipes/:id", detail)
