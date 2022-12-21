@@ -22,8 +22,8 @@ router
   .get("/recipes/listrecipesuser/:id", listByUser)
   .get("/recipes/:id", detail)
   .post("/recipes", uploadFood, insert)
-  .delete("/recipes/:id", deleteFood, destroy)
-  .put("/recipes/:id", deleteFood, uploadFood, update)
+  .delete("/recipes/:id", destroy)
+  .put("/recipes/:id", uploadFood, update)
   .get("/recipes/search/:title", search)
   .get("/recipe/:title", detailTitle)
   .get("/title", sorting);

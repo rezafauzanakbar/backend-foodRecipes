@@ -65,16 +65,23 @@ const recipesController = {
         failed(res, err.message, "failed", "Failed to get detail");
       });
   },
-  destroy: (req, res) => {
-    const id_recipes = req.params.id;
-    recipesModel
-      .deleteRecipes(id_recipes)
-      .then((result) => {
-        success(res, result.rowCount, "success", "Delete Success");
-      })
-      .catch((err) => {
-        failed(res, err.message, "failed", "Failed to delete");
-      });
+  destroy: async (req, res) => {
+    try {
+      const id_recipes = req.params.id;
+      console.log(id_recipes);
+      const data = await recipesModel.getDetailRecipes(id_recipes);
+      console.log(data);
+      const public_id = data.rows[0].picture_pub_id;
+      console.log(public_id);
+      if (public_id !== null) {
+        await cloudinary.uploader.destroy(public_id);
+      }
+      const title = data.rows[0].title;
+      await recipesModel.deleteRecipes(id_recipes);
+      success(res, data.rows[0], "success", `${title} deleted`);
+    } catch (error) {
+      failed(res, error.message, "failed", "Failed to delete");
+    }
   },
   insert: async (req, res) => {
     //jika menggunakan cloudinary
@@ -89,30 +96,60 @@ const recipesController = {
       title,
       ingredients,
       video,
+      picture_pub_id: picture.public_id,
+      picture_url: picture.url,
+      picture_secure_url: picture.secure_url,
     };
-    const getRecipes = await recipesModel.store(body);
-    try {
-      res.json(getRecipes);
-    } catch (err) {
-      res.json(err);
-    }
+    console.table(picture);
+    // const getRecipes = await recipesModel.store(body);
+    // try {
+    //   res.json(getRecipes);
+    //   success(res, getRecipes, "success", "Insert Success");
+    // } catch (err) {
+    //   res.json(err);
+    //   failed(res, err.message, "failed", "Failed to insert");
+    // }
+    recipesModel
+      .store(body)
+      .then((result) => {
+        success(res, result, "success", "Insert Success");
+      })
+      .catch((err) => {
+        failed(res, err.message, "failed", "Failed to insert");
+      });
   },
   update: async (req, res) => {
     const { title, ingredients, video } = req.body;
     const id_recipes = req.params.id;
-    const picture = req.file.filename;
-    const getRecipes = await recipesModel.update(
-      id_recipes,
-      picture,
+    // const picture = req.file.filename;
+    let picture;
+    if (req.file) {
+      picture = await cloudinary.uploader.upload(req.file.path);
+    }
+    const body = await {
+      id_recipes: parseInt(id_recipes),
+      picture: picture.original_filename,
+      picture_pub_id: picture.public_id,
+      picture_url: picture.url,
+      picture_secure_url: picture.secure_url,
       title,
       ingredients,
-      video
-    );
-    try {
-      res.json(getRecipes);
-    } catch (err) {
-      res.json(err);
-    }
+      video,
+    };
+    // const getRecipes = await recipesModel.update(body);
+    // try {
+    //   res.json(getRecipes);
+    // } catch (err) {
+    //   res.json(err);
+    // }
+    recipesModel
+      .update(body)
+      .then((result) => {
+        success(res, body, result, "success", "Update Success");
+      })
+      .catch((err) => {
+        failed(res, err.message, "failed", "Failed to Update");
+      });
   },
   search: async (req, res) => {
     const title = req.params.title;
