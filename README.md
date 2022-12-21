@@ -48,7 +48,7 @@ Run program with `npm start`
 RESTful API for this web application, clone this for development Foodtemplate.\
 
 - [Frontend-MamaRecipe](https://github.com/rezafauzanakbar/food-recipe)
-- [deploy-vercel](https://food-recipe-bice-alpha.vercel.app/)
+- [deploy-vercel](https://frontend-food-recipes.vercel.app/)
 
 ## Contributing
 
